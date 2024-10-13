@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1> Age Calculator</h1>
+    <label for="dob">Date Of Birth (DD/MM/YYYY):</label>
+    <input type="text" id="dob" placeholder="e.g. 05/01/2003">
+    <button onclick="calculateAge()">CalculateAge</button>
+    <p id="result"></p>
+
+    <script>
+
+        function calculateAge() {
+            let dobInput = document.getElementById("dob").value;
+            let dob = new Date (dobInput.split("/").reverse().join("-"));
+            let today = new Date();
+        
+        
+         // Calculate age
+        let age = today.getFullYear() - dob.getFullYear();
+        let monthDiff = today.getMonth() - dob.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+            age--;
+            
+        }
+        
+            // Calculate next birthday
+let nextBirthday = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
+if (nextBirthday < today) {
+    nextBirthday.setFullYear(nextBirthday.getFullYear() + 1);
+    
+}
+let daysRemaining = Math.ceil((nextBirthday - today) / (1000 * 60 * 60 * 24));
+            let years = age;
+            let months = Math.abs(monthDiff) % 12;
+            let days = Math.abs(today.getDate() - dob.getDate());
+
+            document.getElementById("result").innerHTML =
+            `Your age is ${years} years, ${months} months and ${days} days.<br>` +
+                `Your next birthday is on ${nextBirthday.toLocaleDateString()} and it's ${daysRemaining} days remaining.`;
+}
+
+    </script>
+
+
+
+</body>
+</html>
